@@ -1,10 +1,56 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>InvestorPro | AI-Powered Investment Platform</title>
+
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load Custom Styles -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <!-- Load JavaScript -->
+    <script src="{% static 'js/scripts.js' %}" defer></script>
 </head>
-<body>
+<body class="antialiased text-gray-800 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-gray-50/95 text-gray-800 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="/" class="flex items-center">
+                        <span class="text-2xl font-bold text-gray-800 hover:text-amber-700 transition-colors">InvestorPro</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="/platforms" class="text-gray-600 hover:text-amber-600 font-medium">Platforms</a>
+                        <a href="/resources" class="text-gray-600 hover:text-amber-600 font-medium">Resources</a>
+                        <a href="/pricing" class="text-gray-600 hover:text-amber-600 font-medium">Pricing</a>
+                        <button class="bg-purple-950 hover:bg-purple-900 text-white px-6 py-2 rounded-md text-sm font-semibold shadow-sm">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-600">&copy; 2025 InvestorPro. All rights reserved.</p>
+        </div>
+    </footer>
 
 </body>
 </html>

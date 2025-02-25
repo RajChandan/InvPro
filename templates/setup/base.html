@@ -1,5 +1,6 @@
-<!DOCTYPE html>
 {% load static %}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,16 +9,37 @@
 
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0B1F3F",
+                        secondary: "#2A4B8C",
+                        accent: "#FFB800"
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "system-ui", "sans-serif"],
+                        heading: ["Montserrat", "sans-serif"]
+                    },
+                    animation: {
+                        "fade-in": "fadeIn 0.5s ease-in",
+                        "slide-up": "slideUp 0.5s ease-out"
+                    }
+                }
+            }
+        };
+    </script>
 
-    <!-- Load Custom Styles -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- Load JavaScript -->
+    <!-- Scripts -->
     <script src="{% static 'js/scripts.js' %}" defer></script>
 </head>
 <body class="antialiased text-gray-800 min-h-screen flex flex-col">
 
-    <!-- Navbar -->
+    <!-- Navbar (EXACT COPY FROM ROLLOUT) -->
     <nav class="fixed w-full z-50 bg-gray-50/95 text-gray-800 backdrop-blur-sm border-b border-gray-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -26,31 +48,81 @@
                         <span class="text-2xl font-bold text-gray-800 hover:text-amber-700 transition-colors">InvestorPro</span>
                     </a>
                 </div>
+
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-center space-x-8">
                         <a href="/platforms" class="text-gray-600 hover:text-amber-600 font-medium">Platforms</a>
                         <a href="/resources" class="text-gray-600 hover:text-amber-600 font-medium">Resources</a>
                         <a href="/pricing" class="text-gray-600 hover:text-amber-600 font-medium">Pricing</a>
-                        <button class="bg-purple-950 hover:bg-purple-900 text-white px-6 py-2 rounded-md text-sm font-semibold shadow-sm">
+                        <button class="bg-purple-950 hover:bg-purple-900 text-white px-6 py-2 rounded-md text-sm font-semibold transition-colors shadow-sm">
                             Get Started
                         </button>
                     </div>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-amber-600 hover:bg-gray-50 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-b border-gray-100">
+                <a href="/platforms" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-gray-50 rounded-md transition-colors">Platforms</a>
+                <a href="/resources" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-gray-50 rounded-md transition-colors">Resources</a>
+                <a href="/pricing" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-gray-50 rounded-md transition-colors">Pricing</a>
+                <button class="w-full bg-gradient-to-r from-purple-950 via-purple-800 to-pink-900 hover:from-purple-900 hover:via-purple-700 hover:to-pink-800 text-white px-6 py-2 rounded-md text-sm font-semibold transition-colors mt-4 shadow-sm">
+                    Get Started
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Page Content -->
-    <div>
+    <div class="mt-16">
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-50 pt-24 pb-12">
+    <!-- Footer (EXACT COPY FROM ROLLOUT) -->
+    <footer class="bg-white pt-24 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-600">&copy; 2025 InvestorPro. All rights reserved.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">InvestorPro</h3>
+                    <p class="text-gray-600 mb-6">The premier AI-powered investment platform connecting elite investors with high-growth startups.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-yellow-600/30 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-600 text-sm mb-4 md:mb-0">
+                        © 2024 InvestorPro. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-600 hover:text-yellow-600 transition-colors duration-200 text-sm">Privacy Policy</a>
+                        <a href="#" class="text-gray-600 hover:text-yellow-600 transition-colors duration-200 text-sm">Terms of Service</a>
+                        <a href="#" class="text-gray-600 hover:text-yellow-600 transition-colors duration-200 text-sm">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
 
 </body>
 </html>

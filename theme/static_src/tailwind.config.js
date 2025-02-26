@@ -1,57 +1,138 @@
-/**
- * This is a minimal config.
- *
- * If you need the full config, get it from here:
- * https://unpkg.com/browse/tailwindcss@latest/stubs/defaultConfig.stub.js
- */
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-        /**
-         * HTML. Paths to Django template files that will contain Tailwind CSS classes.
-         */
-
-        /*  Templates within theme app (<tailwind_app_name>/templates), e.g. base.html. */
-        '../templates/**/*.html',
-
-        /*
-         * Main templates directory of the project (BASE_DIR/templates).
-         * Adjust the following line to match your project structure.
-         */
-        '../../templates/**/*.html',
-
-        /*
-         * Templates in other django apps (BASE_DIR/<any_app_name>/templates).
-         * Adjust the following line to match your project structure.
-         */
-        '../../**/templates/**/*.html',
-
-        /**
-         * JS: If you use Tailwind CSS in JavaScript, uncomment the following lines and make sure
-         * patterns match your project structure.
-         */
-        /* JS 1: Ignore any JavaScript in node_modules folder. */
-        // '!../../**/node_modules',
-        /* JS 2: Process all JavaScript files in the project. */
-        // '../../**/*.js',
-
-        /**
-         * Python: If you use Tailwind CSS classes in Python, uncomment the following line
-         * and make sure the pattern below matches your project structure.
-         */
-        // '../../**/*.py'
-    ],
-    theme: {
-        extend: {},
+  // Ensure Tailwind scans your Django templates & JS files
+  content: [
+    "./templates/**/*.{html,js}",
+    "./**/*.html", // If you have HTML files in the root or other directories
+    "./core/templates/**/*.{html,js}",
+    "./theme/templates/**/*.{html,js}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#0B1F3F',
+          50: '#f8f8f8',
+          100: '#e8e8e8',
+          200: '#d3d3d3',
+          300: '#a3a3a3',
+          400: '#737373',
+          500: '#525252',
+          600: '#404040',
+          700: '#262626',
+          800: '#171717',
+          900: '#0a0a0a',
+          950: '#030303',
+        },
+        secondary: {
+          DEFAULT: '#2A4B8C',
+          50: '#f8f8f8',
+          100: '#e8e8e8',
+          200: '#d3d3d3',
+          300: '#a3a3a3',
+          400: '#737373',
+          500: '#525252',
+          600: '#404040',
+          700: '#262626',
+          800: '#171717',
+          900: '#0a0a0a',
+          950: '#030303',
+        },
+        accent: {
+          DEFAULT: '#FFB800',
+          50: '#f8f8f8',
+          100: '#e8e8e8',
+          200: '#d3d3d3',
+          300: '#a3a3a3',
+          400: '#737373',
+          500: '#525252',
+          600: '#404040',
+          700: '#262626',
+          800: '#171717',
+          900: '#0a0a0a',
+          950: '#030303',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
+        body: ['Montserrat', 'sans-serif'],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '30': '7.5rem',
+      },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in',
+        'fade-out': 'fadeOut 0.5s ease-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'slide-down': 'slideDown 0.5s ease-out',
+        'slide-left': 'slideLeft 0.5s ease-out',
+        'slide-right': 'slideRight 0.5s ease-out',
+        'scale-in': 'scaleIn 0.5s ease-out',
+        'scale-out': 'scaleOut 0.5s ease-out',
+        'spin-slow': 'spin 3s linear infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-slow': 'bounce 3s infinite',
+        'float': 'float 3s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideLeft: {
+          '0%': { transform: 'translateX(20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        slideRight: {
+          '0%': { transform: 'translateX(-20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.9)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        scaleOut: {
+          '0%': { transform: 'scale(1.1)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+      },
+      aspectRatio: {
+        portrait: '3/4',
+        landscape: '4/3',
+        ultrawide: '21/9',
+      },
     },
-    plugins: [
-        /**
-         * '@tailwindcss/forms' is the forms plugin that provides a minimal styling
-         * for forms. If you don't like it or have own styling for forms,
-         * comment the line below to disable '@tailwindcss/forms'.
-         */
-        require('@tailwindcss/forms'),
-        require('@tailwindcss/typography'),
-        require('@tailwindcss/aspect-ratio'),
-    ],
-}
+  },
+  variants: {
+    extend: {
+      opacity: ['disabled'],
+      cursor: ['disabled'],
+      backgroundColor: ['active', 'disabled'],
+      textColor: ['active', 'disabled'],
+    },
+  },
+  plugins: [],
+};

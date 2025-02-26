@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&family=Source+Code+Pro:wght@200..900&display=swap');
+
+/* Apply Global Tailwind Settings */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Global Styles */
+body {
+    @apply font-sans bg-gray-100 text-gray-800;
+}
+
+/* Navbar Styling */
+.navbar {
+    @apply fixed w-full bg-white shadow-md border-b border-gray-200;
+}
+.navbar .nav-links a {
+    @apply text-gray-700 hover:text-yellow-500 transition-colors duration-200 font-medium;
+}
+
+/* Buttons */
+.cta-button {
+    @apply px-6 py-2 bg-yellow-500 text-white font-semibold rounded-md shadow-md hover:bg-yellow-600 transition;
+}
+
+/* Footer */
+.footer {
+    @apply bg-gray-900 text-white py-12 text-center;
+}

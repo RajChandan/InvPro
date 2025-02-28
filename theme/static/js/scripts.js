@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.querySelector('.mobile-menu');
 
-    if (mobileMenuButton) {
+    if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', function () {
             mobileMenu.classList.toggle('hidden');
         });
@@ -22,26 +22,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ✅ Example: Navbar hide on scroll down, show on scroll up
-    let lastScrollTop = 0;
-    const navbar = document.querySelector('.navbar');
-
-    if (navbar) {
-        window.addEventListener("scroll", function () {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop) {
-                navbar.classList.add("hidden");
-            } else {
-                navbar.classList.remove("hidden");
-            }
-            lastScrollTop = scrollTop;
-        });
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function () {
+    // ✅ Particle Animation (Fix: Check if `.particles-container` exists before running)
     function createParticles() {
         const container = document.querySelector('.particles-container');
+
+        if (!container) {
+            console.warn("Particles container not found. Skipping particle creation.");
+            return;
+        }
+
         for (let i = 0; i < 50; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -50,6 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
             container.appendChild(particle);
         }
     }
-    createParticles();
-});
 
+    createParticles(); // ✅ Runs only if `.particles-container` exists
+});

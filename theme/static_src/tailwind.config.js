@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif', 'Inter', 'system-ui'],
+        heading: ['Montserrat', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: '#0B1F3F',

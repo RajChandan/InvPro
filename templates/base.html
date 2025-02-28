@@ -25,8 +25,7 @@
 
 <body>
   <!-- Navbar -->
-  <nav
-    class="fixed top-0 w-full z-50 bg-gray-50/95 text-gray-800 backdrop-blur-sm border-b border-gray-100 shadow-sm navbar">
+  <nav class="fixed w-full z-50 bg-gray-50/95 text-gray-800 backdrop-blur-sm border-b border-gray-100 shadow-sm navbar">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
@@ -90,6 +89,7 @@
   <!-- Your page content here -->
   <main>
     <!-- Page content -->
+    {% block content %}{% endblock %}
   </main>
 </body>
 

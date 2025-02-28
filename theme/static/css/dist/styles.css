@@ -16,6 +16,37 @@ body {
   font-family: Montserrat, sans-serif, Inter, system-ui, sans-serif !important;
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10px) translateX(10px);
+  }
+  50% {
+    transform: translateY(0) translateX(20px);
+  }
+  75% {
+    transform: translateY(10px) translateX(10px);
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: linear-gradient(
+    to right,
+    rgba(88, 28, 135, 0.08),
+    rgba(88, 28, 135, 0.05),
+    rgba(157, 23, 77, 0.05)
+  );
+  border-radius: 50%;
+  animation: float 15s infinite linear;
+  box-shadow: 0 0 10px rgba(88, 28, 135, 0.05);
+}
+
 *,
 :after,
 :before {

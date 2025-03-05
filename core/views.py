@@ -33,4 +33,47 @@ def landing_page(request):
             "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
         },
     ]
-    return render(request, 'core/landing.html', {'features': features})
+
+    steps = [
+        {
+            "title": "Profile Creation & Verification",
+            "description": "Complete your investor profile and verification process. Our platform ensures compliance with accreditation requirements."
+        },
+        {
+            "title": "Access Deal Flow",
+            "description": "Browse through our curated list of pre-vetted startups and receive AI-powered recommendations based on your investment preferences."
+        },
+        {
+            "title": "Due Diligence",
+            "description": "Review comprehensive AI-generated reports, financial metrics, and market analysis for informed decision-making."
+        },
+        {
+            "title": "Secure Investment",
+            "description": "Execute investments through our secure platform with digital documentation and automated compliance checks."
+        },
+        {
+            "title": "Portfolio Management",
+            "description": "Track performance, receive updates, and manage your investment portfolio through our intuitive dashboard."
+        },
+    ]
+    testimonials = [
+        {
+            "name": "Sarah Chen",
+            "position": "Managing Partner, Beyond Capital",
+            "message": "The AI-powered insights have transformed our investment process. We've seen a 40% increase in deal flow quality since using InvestorPro.",
+            "initials": "SC"
+        },
+        {
+            "name": "Michael Stern",
+            "position": "Founder, TechVentures Capital",
+            "message": "The platform's secure transaction infrastructure and comprehensive analytics have made our investment process significantly more efficient.",
+            "initials": "MS"
+        },
+        {
+            "name": "Jennifer Wong",
+            "position": "CEO, Innovation Capital",
+            "message": "InvestorPro's AI-driven due diligence has helped us identify promising startups we might have otherwise missed. Outstanding platform.",
+            "initials": "JW"
+        },
+    ]
+    return render(request, 'core/landing.html', {'features': features,'steps':steps,'testimonials':testimonials})

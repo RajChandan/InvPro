@@ -1,0 +1,60 @@
+{% load static %}
+
+<section id="statistics" class="bg-gray-50 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+            {% for stat in statistics %}
+            <div
+                class="text-center animate__animated animate__fadeIn bg-white p-8 rounded-lg shadow-sm transition-transform hover:transform hover:scale-105 border border-gray-100 hover:border-yellow-200">
+                <div class="text-gradient-to-r from-purple-900 via-purple-700 to-pink-900 mb-4">
+                    <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="{{ stat.icon }}">
+                        </path>
+                    </svg>
+                </div>
+                <div class="mb-2">
+                    <span
+                        class="text-4xl font-serif font-bold bg-gradient-to-r from-purple-900 via-purple-700 to-pink-900 bg-clip-text text-transparent"
+                        data-count="{{ stat.value }}">
+                        {{ stat.value }}
+                    </span>
+                </div>
+                <p class="text-gray-700 font-medium">{{ stat.label }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const numberElements = document.querySelectorAll('[data-count]');
+
+            const animateValue = (element, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const current = Math.floor(progress * (end - start) + start);
+                    element.textContent = current + (element.dataset.count.includes('%') ? '%' : '+');
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const endValue = parseInt(element.dataset.count);
+                        animateValue(element, 0, endValue, 2000);
+                        observer.unobserve(element);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            numberElements.forEach(element => observer.observe(element));
+        });
+    </script>
+</section>

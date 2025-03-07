@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif', 'Inter', 'system-ui'],
-        heading: ['Montserrat', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'], // For body
+        heading: ['Inter', 'sans-serif'],
       },
       colors: {
         primary: {

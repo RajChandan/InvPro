@@ -40,15 +40,14 @@
                     <a href="/pricing"
                         class="text-gray-600 hover:text-amber-600 transition-colors font-medium">Pricing</a>
 
+                    <a href="/pricing" class="text-gray-600 hover:text-amber-600 transition-colors font-medium">Contact
+                        Us</a>
                     <!-- Call to Action Buttons -->
                     <button
                         class="bg-purple-950 hover:bg-purple-900 text-white px-6 py-2 rounded-md text-sm font-semibold transition-colors shadow-sm">
                         Get Started
                     </button>
-                    <button onclick="document.getElementById('contact-modal').classList.remove('hidden')"
-                        class="text-gray-600 hover:text-amber-600 transition-colors font-medium">
-                        Contact Us
-                    </button>
+
                 </div>
             </div>
 
@@ -74,10 +73,14 @@
                 class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-gray-50 rounded-md transition-colors">Resources</a>
             <a href="/pricing"
                 class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-gray-50 rounded-md transition-colors">Pricing</a>
+            <a href="/pricing"
+                class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-amber-600 hover:bg-gray-50 rounded-md transition-colors">Contact
+                Us</a>
             <button
                 class="w-full bg-purple-950 hover:bg-purple-900 text-white px-6 py-2 rounded-md text-sm font-semibold transition-colors mt-4 shadow-sm">
                 Get Started
             </button>
+
         </div>
     </div>
 
@@ -86,8 +89,7 @@
         <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Contact Us</h2>
-                <button onclick="document.getElementById('contact-modal').classList.add('hidden')"
-                    class="text-gray-500 hover:text-gray-700">
+                <button data-close-contact class="text-gray-500 hover:text-gray-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                         </path>

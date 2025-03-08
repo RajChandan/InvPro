@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // ✅ Mobile menu toggle functionality
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.querySelector('.mobile-menu');
-
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', function () {
             mobileMenu.classList.toggle('hidden');
@@ -22,15 +21,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ✅ Particle Animation (Fix: Check if `.particles-container` exists before running)
+    // ✅ Particle Animation (runs only if .particles-container exists)
     function createParticles() {
         const container = document.querySelector('.particles-container');
-
         if (!container) {
             console.warn("Particles container not found. Skipping particle creation.");
             return;
         }
-
         for (let i = 0; i < 50; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -39,6 +36,30 @@ document.addEventListener('DOMContentLoaded', function () {
             container.appendChild(particle);
         }
     }
+    createParticles();
 
-    createParticles(); // ✅ Runs only if `.particles-container` exists
+    // ✅ Contact Modal Functionality
+    const contactModal = document.getElementById("contact-modal");
+    const openContactButton = document.querySelector("[data-open-contact]");
+    const closeContactButton = document.querySelector("[data-close-contact]");
+
+    if (openContactButton && contactModal) {
+        openContactButton.addEventListener("click", function () {
+            contactModal.classList.remove("hidden");
+            contactModal.classList.add("animate-fade-in");
+        });
+    }
+    if (closeContactButton && contactModal) {
+        closeContactButton.addEventListener("click", function () {
+            contactModal.classList.add("hidden");
+        });
+    }
+    // Close modal when clicking outside the modal content
+    if (contactModal) {
+        contactModal.addEventListener("click", function (event) {
+            if (event.target === contactModal) {
+                contactModal.classList.add("hidden");
+            }
+        });
+    }
 });

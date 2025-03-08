@@ -42,3 +42,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createParticles(); // ✅ Runs only if `.particles-container` exists
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Scripts loaded successfully!");
+
+    // ✅ Mobile Menu Toggle
+    const mobileMenuButton = document.querySelector(".mobile-menu-button");
+    const mobileMenu = document.querySelector(".mobile-menu");
+
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden");
+        });
+    }
+
+    // ✅ Contact Modal Functionality
+    const contactModal = document.getElementById("contact-modal");
+    const openContactButton = document.querySelector("[data-open-contact]");
+    const closeContactButton = document.querySelector("[data-close-contact]");
+    const modalOverlay = document.getElementById("contact-modal");
+
+    if (openContactButton) {
+        openContactButton.addEventListener("click", function () {
+            contactModal.classList.remove("hidden");
+            contactModal.classList.add("animate-fade-in");
+        });
+    }
+
+    if (closeContactButton) {
+        closeContactButton.addEventListener("click", function () {
+            contactModal.classList.add("hidden");
+        });
+    }
+
+    // ✅ Close Modal When Clicking Outside
+    if (modalOverlay) {
+        modalOverlay.addEventListener("click", function (event) {
+            if (event.target === modalOverlay) {
+                contactModal.classList.add("hidden");
+            }
+        });
+    }
+});

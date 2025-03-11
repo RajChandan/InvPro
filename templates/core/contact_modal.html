@@ -1,29 +1,58 @@
-<section id="contact" class=" bg-gray-50 py-24">
-    <div class="max-w-xl mx-auto my-8">
-        <h2 class="text-3xl font-extrabold text-center text-gray-900 mb-8">Get in Touch</h2>
-        <div class="bg-white shadow-lg rounded-lg p-6">
-            <form action="/contact/" method="POST" class="space-y-6">
-                {% csrf_token %}
-                <div>
-                    <label for="name" class="block text-lg font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" name="name" required
-                        class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                </div>
-                <div>
-                    <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" name="email" required
-                        class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                </div>
-                <div>
-                    <label for="message" class="block text-lg font-medium text-gray-700">Message</label>
-                    <textarea id="message" name="message" rows="5" required
-                        class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
-                </div>
-                <button type="submit"
-                    class="w-full py-3 px-6 bg-purple-950 hover:bg-purple-900 text-white font-semibold rounded-lg shadow transition duration-300">
-                    Send Message
-                </button>
-            </form>
+<section id="contact" class="bg-white py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-4xl font-bold text-gray-800 mb-6">Get in touch</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Every conversation sparks a possibility. Let's connect and create something extraordinary.
+            </p>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <form id="contactForm" action="/contact/" method="POST" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="name" class="block text-lg font-medium text-gray-700">Name</label>
+                        <input type="text" id="name" name="name" required
+                            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" name="email" required
+                            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="company" class="block text-lg font-medium text-gray-700">Company Name</label>
+                        <input type="text" id="company" name="company"
+                            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-lg font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="phone" name="phone"
+                            title="Please enter a valid phone number (numbers, spaces, dashes, parentheses, and optional leading +)"
+                            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="organization_type" class="block text-lg font-medium text-gray-700">Organization
+                            Type</label>
+                        <select id="organization_type" name="organization_type"
+                            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                            <option value="Investment_firm">Investment Firm</option>
+                            <option value="investor">Investor</option>
+                            <option value="startup">Startup</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-lg font-medium text-gray-700">Message</label>
+                        <textarea id="message" name="message" rows="5" required
+                            class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full py-3 px-6 bg-purple-950 hover:bg-purple-900 text-white font-semibold rounded-lg shadow transition duration-300">
+                        Send Message
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </section>

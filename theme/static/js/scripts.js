@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Scripts.js loaded successfully!");
 
-    // ✅ Mobile menu toggle functionality
+    // Mobile menu toggle functionality
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.querySelector('.mobile-menu');
     if (mobileMenuButton && mobileMenu) {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ✅ Smooth scrolling for anchor links
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (event) {
             event.preventDefault();
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ✅ Particle Animation (runs only if .particles-container exists)
+    // Particle Animation (runs only if .particles-container exists)
     function createParticles() {
         const container = document.querySelector('.particles-container');
         if (!container) {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     createParticles();
 
-    // ✅ Contact Modal Functionality
+    // Contact Modal Functionality
     const contactModal = document.getElementById("contact-modal");
     const openContactButton = document.querySelector("[data-open-contact]");
     const closeContactButton = document.querySelector("[data-close-contact]");
@@ -59,6 +59,26 @@ document.addEventListener('DOMContentLoaded', function () {
         contactModal.addEventListener("click", function (event) {
             if (event.target === contactModal) {
                 contactModal.classList.add("hidden");
+            }
+        });
+    }
+
+    // ✅ Custom Phone Number Validation
+    // Make sure your form has id="contactForm"
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (event) {
+            const phoneInput = document.getElementById('phone');
+            console.log(phoneInput, ' -== phone');
+            if (phoneInput && phoneInput.value) {
+                const pattern = /^\+?[0-9\s\-()]+$/;
+                if (!pattern.test(phoneInput.value)) {
+                    event.preventDefault();
+                    phoneInput.setCustomValidity("Please enter a valid phone number (numbers, spaces, dashes, parentheses, and an optional leading +).");
+                    phoneInput.reportValidity();
+                } else {
+                    phoneInput.setCustomValidity("");
+                }
             }
         });
     }

@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     createParticles();
 
-    // Contact Modal Functionality
-    const contactModal = document.getElementById("contact-modal");
+    // Contact Modal Functionality (if applicable)
+    const contactModal = document.getElementById("contactForm");
     const openContactButton = document.querySelector("[data-open-contact]");
     const closeContactButton = document.querySelector("[data-close-contact]");
 
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
             contactModal.classList.add("hidden");
         });
     }
-    // Close modal when clicking outside the modal content
     if (contactModal) {
         contactModal.addEventListener("click", function (event) {
             if (event.target === contactModal) {
@@ -63,23 +62,78 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ✅ Custom Phone Number Validation
-    // Make sure your form has id="contactForm"
+    // AJAX submission for the contact form with custom phone validation
     const contactForm = document.getElementById('contactForm');
+    console.log(contactForm, "contact xsx");
     if (contactForm) {
         contactForm.addEventListener('submit', function (event) {
+            console.log("Form submit intercepted");
+            event.preventDefault(); // Prevent full-page reload
+
             const phoneInput = document.getElementById('phone');
-            console.log(phoneInput, ' -== phone');
             if (phoneInput && phoneInput.value) {
                 const pattern = /^\+?[0-9\s\-()]+$/;
                 if (!pattern.test(phoneInput.value)) {
-                    event.preventDefault();
                     phoneInput.setCustomValidity("Please enter a valid phone number (numbers, spaces, dashes, parentheses, and an optional leading +).");
                     phoneInput.reportValidity();
+                    return;
                 } else {
                     phoneInput.setCustomValidity("");
                 }
             }
+
+            const formData = new FormData(contactForm);
+            console.log("Submitting via AJAX with data:", [...formData.entries()]);
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            })
+                .then(response => {
+                    console.log("Response received:", response);
+                    if (!response.ok) {
+                        return response.json().then(data => { throw data; });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("AJAX submission successful:", data);
+                    if (data.status === "success") {
+                        showPopup(data.message, false);
+                        contactForm.reset();
+                    } else {
+                        showPopup(data.message, true);
+                    }
+                })
+                .catch(errorData => {
+                    console.error("AJAX submission error:", errorData);
+                    const errorMsg = errorData.message || "An error occurred. Please try again later.";
+                    showPopup(errorMsg, true);
+                });
         });
+    }
+
+    function showPopup(message, isError = false) {
+        const popup = document.createElement('div');
+        popup.id = 'popup-message';
+        popup.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
+        popup.innerHTML = `
+            <div class="bg-white p-8 rounded shadow-lg max-w-md mx-auto">
+                <p class="text-xl font-semibold ${isError ? 'text-red-700' : 'text-green-700'}">${message}</p>
+                <button id="close-popup" class="mt-4 px-4 py-2 bg-purple-950 text-white rounded hover:bg-purple-900">Close</button>
+            </div>
+        `;
+        document.body.appendChild(popup);
+        document.getElementById('close-popup').addEventListener('click', function () {
+            document.body.removeChild(popup);
+        });
+        setTimeout(function () {
+            if (document.body.contains(popup)) {
+                document.body.removeChild(popup);
+            }
+        }, 5000);
     }
 });

@@ -1,15 +1,14 @@
 <section id="contact" class="bg-white py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10">
-            <h2 class="text-4xl font-bold text-gray-800 mb-6">Get in touch</h2>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold text-gray-800 mb-6 animate__animated animate__fadeIn bg-clip-text text-transparent bg-gradient-to-r from-[#4C1D95] via-[#9D174D] to-[#4C1D95]"">Get in touch</h2>
+            <p class=" text-xl text-gray-600 max-w-3xl mx-auto">
                 Every conversation sparks a possibility. Let's connect and create something extraordinary.
-            </p>
+                </p>
         </div>
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg rounded-lg p-6">
-                <form id="contactForm" action="/contact/" method="POST" class="space-y-6">
+                <form id="contactForm" action="/" method="POST" class="space-y-6" novalidate>
                     {% csrf_token %}
                     <div>
                         <label for="name" class="block text-lg font-medium text-gray-700">Name</label>

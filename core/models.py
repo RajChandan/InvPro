@@ -21,3 +21,17 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"{self.name} --- {self.email} --- {self.message}"
+
+
+class InvestmentInquiry(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=50, blank=True, null=True)
+    investment_amount = models.DecimalField(max_digits=12, decimal_places=2)
+    investment_goal = models.CharField(max_length=255)
+    risk_tolerance = models.CharField(max_length=50, blank=True, null=True)
+    sectors = models.CharField(max_length=255, blank=True, null=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.investment_goal}"

@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import JsonResponse
 from django.contrib import messages
-from .models import ContactMessage
+from .models import ContactMessage, InvestmentInquiry
 
 
 def landing_page(request):
@@ -138,45 +140,98 @@ def landing_page(request):
             "icon": "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
         },
     ]
-    return render(
-        request,
-        "core/landing.html",
-        {
-            "features": features,
-            "steps": steps,
-            "testimonials": testimonials,
-            "pricing_plans": pricing_plans,
-            "statistics": statistics,
-        },
-    )
 
+    # Add contact_success parameter from GET to the context.
+    context = {
+        "features": features,
+        "steps": steps,
+        "testimonials": testimonials,
+        "pricing_plans": pricing_plans,
+        "statistics": statistics,
+    }
 
-def contact(request):
     if request.method == "POST":
+        # Retrieve form data
         name = request.POST.get("name", "").strip()
         email = request.POST.get("email", "").strip()
         company = request.POST.get("company", "").strip()
         phone = request.POST.get("phone", "").strip()
         organization_type = request.POST.get("organization_type", "").strip()
         message_text = request.POST.get("message", "").strip()
-
+        print(
+            request.META.get("HTTP_X_REQUESTED_WITH"),
+            " ========== request header",
+        )
+        # Basic validation
         if not name or not email or not message_text:
-            messages.error(request, "Please fill in the required fields.")
-            return redirect("contact")
+            if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
+                return JsonResponse(
+                    {"status": "error", "message": error_msg}, status=400
+                )
+            else:
+                context["contact_error"] = error_msg
+                return render(request, "core/landing.html", context)
+        else:
+            # Save contact message into DB
+            contact_message = ContactMessage(
+                name=name,
+                email=email,
+                company=company,
+                phone=phone,
+                organization_type=organization_type,
+                message=message_text,
+            )
+            contact_message.save()
+            success_msg = (
+                "Thank you for contacting us. We will get back to you shortly."
+            )
+            if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
+                return JsonResponse({"status": "success", "message": success_msg})
+            else:
+                return redirect(reverse("landing_page"))
 
-        contact_message = ContactMessage(
-            name=name,
-            email=email,
-            company=company,
-            phone=phone,
-            organization_type=organization_type,
-            message=message_text,
-        )
-        contact_message.save()
+    return render(request, "core/landing.html", context)
 
-        messages.success(
-            request, "Thank you for contacting us. We will get back to you shortly."
-        )
-        return redirect("contact")
-    else:
-        return render(request, "core/contact.html")
+
+def start_investing(request):
+    context = {}
+
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
+        phone = request.POST.get("phone", "").strip()
+        investment_amount = request.POST.get("investment_amount", "").strip()
+        investment_goal = request.POST.get("investment_goal", "").strip()
+        risk_tolerance = request.POST.get("risk_tolerance", "").strip()
+        sectors = request.POST.get("sectors", "").strip()
+
+        # Basic validation: Name, Email, Investment Amount, and Investment Goal are required.
+        if not name or not email or not investment_amount or not investment_goal:
+            error_msg = "Please fill in the required fields (Name, Email, Investment Amount, and Investment Goal)."
+            if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
+                return JsonResponse(
+                    {"status": "error", "message": error_msg}, status=400
+                )
+            else:
+                context["error"] = error_msg
+                return render(request, "core/start_investing.html", context)
+        else:
+            # Save the inquiry
+            inquiry = InvestmentInquiry(
+                name=name,
+                email=email,
+                phone=phone,
+                investment_amount=investment_amount,
+                investment_goal=investment_goal,
+                risk_tolerance=risk_tolerance,
+                sectors=sectors,
+            )
+            inquiry.save()
+            success_msg = "Thank you for your interest. We will contact you soon to help you start investing."
+            if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
+                return JsonResponse({"status": "success", "message": success_msg})
+            else:
+                context["success"] = success_msg
+                return render(request, "core/investing.html", context)
+
+    return render(request, "core/investing.html", context)

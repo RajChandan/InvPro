@@ -35,3 +35,14 @@ class InvestmentInquiry(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.investment_goal}"
+
+
+class Startup(models.Model):
+    startup_name = models.CharField(max_length=200)
+    company_url = models.URLField(blank=True)
+    email = models.EmailField()
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.startup_name

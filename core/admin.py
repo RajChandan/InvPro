@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ContactMessage, InvestmentInquiry
+from .models import ContactMessage, InvestmentInquiry, Startup
 
 # Register your models here.
 
@@ -32,3 +32,9 @@ class InvestInquiryAdmin(admin.ModelAdmin):
         "submitted_at",
     )
     search_fields = ("name", "email", "sectors")
+
+
+@admin.register(Startup)
+class StartupAdmin(admin.ModelAdmin):
+    list_display = ("startup_name", "company_url", "email", "description", "created_at")
+    search_fields = ("startup_name", "company_url", "email")

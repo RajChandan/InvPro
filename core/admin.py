@@ -17,3 +17,18 @@ class ContactMessageAdmin(admin.ModelAdmin):
     )
     search_fields = ("name", "email", "company", "message")
     list_filter = ("organization_type", "submitted_at")
+
+
+@admin.register(InvestmentInquiry)
+class InvestInquiryAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "email",
+        "phone",
+        "investment_amount",
+        "investment_goal",
+        "risk_tolerance",
+        "sectors",
+        "submitted_at",
+    )
+    search_fields = ("name", "email", "sectors")

@@ -164,6 +164,7 @@ def landing_page(request):
         )
         # Basic validation
         if not name or not email or not message_text:
+            error_msg = "Required fields are empty"
             if request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest":
                 return JsonResponse(
                     {"status": "error", "message": error_msg}, status=400

@@ -38,10 +38,34 @@ class InvestmentInquiry(models.Model):
 
 
 class Startup(models.Model):
+    INDUSTRY_CHOICES = [
+        ("technology", "Technology"),
+        ("healthcare", "Healthcare"),
+        ("fintech", "Fintech"),
+        ("education", "Education"),
+        ("ecommerce", "E-commerce"),
+        ("other", "Other"),
+    ]
+    STAGE_CHOICES = [
+        ("idea", "Idea Stage"),
+        ("mvp", "MVP"),
+        ("early", "Early Traction"),
+        ("growth", "Growth Stage"),
+        ("scaling", "Scaling"),
+    ]
+
     startup_name = models.CharField(max_length=200)
     company_url = models.URLField(blank=True)
     email = models.EmailField()
     description = models.TextField(blank=True)
+    founder_name = models.CharField(max_length=200, blank=True)
+    phone = models.CharField(max_length=50, blank=True)
+    industry = models.CharField(
+        max_length=50, choices=INDUSTRY_CHOICES, default="other"
+    )
+    startup_stage = models.CharField(
+        max_length=50, choices=STAGE_CHOICES, default="idea"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

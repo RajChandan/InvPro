@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib import messages
-from .models import ContactMessage, InvestmentInquiry
+from .models import ContactMessage, InvestmentInquiry, Startup
 
 
 def landing_page(request):
@@ -236,3 +236,40 @@ def start_investing(request):
                 return render(request, "core/investing.html", context)
 
     return render(request, "core/investing.html", context)
+
+
+def register_startup(request):
+    if request.method == "POST":
+        startup_name = request.POST.get("startup_name", "").strip()
+        company_url = request.POST.get("company_url", "").strip()
+        email = request.POST.get("email", "").strip()
+        description = request.POST.get("description", "").strip()
+        phone = request.POST.get("phone", "").strip()
+        founder_name = request.POST.get("founder_name", "").strip()
+        industry = request.POST.get("industry", "").strip()
+        startup_stage = request.POST.get("startup_stage", "").strip()
+        if not (
+            startup_name
+            and company_url
+            and email
+            and founder_name
+            and industry
+            and startup_stage
+        ):
+            messages.error(request, "Please fill in all required fields.")
+            return render(request, "core/register_startup.html")
+
+        startup = Startup(
+            startup_name=startup_name,
+            company_url=company_url,
+            email=email,
+            phone=phone,
+            description=description,
+            founder_name=founder_name,
+            industry=industry,
+            startup_stage=startup_stage,
+        )
+        startup.save()
+        messages.success(request, "Your startup has been registered successfully!")
+        return redirect("landing_page")
+    return render(request, "core/register_startup.html")

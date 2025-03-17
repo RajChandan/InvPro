@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Custom CSS Animations -->
+<style>
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-spin-slow {
+        animation: spin 20s linear infinite;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .animate-slide-in {
+        animation: slideIn 1s ease-out;
+    }
+
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+        60% {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .animate-bounce-in {
+        animation: bounceIn 0.8s ease-out;
+    }
+</style>
+
+<section id="start-investing" class="bg-gray-50 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Gradient Heading -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-purple-950 via-purple-800 to-pink-900"
+                style="background: linear-gradient(to right, #7e22ce, #af3371, #7c1a1a); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Ignite Innovation. Connect with Investors. Accelerate Growth.
+            </h1>
+        </div>
+
+        <!-- Two-Column Layout -->
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Left Column: Globe & Process Explanation -->
+            <div class="w-full md:w-1/2 space-y-8">
+                <div class="relative animate-fade-inRight">
+                    <div class="relative z-10 bg-white rounded-2xl p-10 border border-gray-100 shadow-2xl">
+                        <p class="text-gray-600 text-center mb-8 text-lg">
+                            Join our platform and connect with investors, mentors, and resources that can take your
+                            startup to the next level.
+                        </p>
+                        <div class="space-y-4">
+                            <ul class="space-y-3">
+                                <li class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-gray-700 font-medium">
+                                        Access to our network of angel investors and venture capitalists
+                                    </span>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-gray-700 font-medium">
+                                        Personalized mentorship from industry experts
+                                    </span>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-gray-700 font-medium">
+                                        Exclusive resources and tools to scale your business
+                                    </span>
+                                </li>
+                                <li class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-gray-700 font-medium">
+                                        Opportunities to showcase your startup to potential customers
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Right Column: Investment Inquiry Form -->
+            <div class="w-full md:w-1/2">
+                <div class="bg-white shadow-lg rounded-lg p-6 animate-bounce-in">
+                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6 animate-fade-in">Register Your Startup
+                    </h2>
+                    <form id="investingForm" action="{% url 'register_startup' %}" method="POST" class="space-y-6"
+                        novalidate>
+                        {% csrf_token %}
+
+
+
+                        <div>
+                            <label for="startup_name" class="block text-lg font-medium text-gray-700">Startup
+                                Name</label>
+                            <input type="text" id="startup_name" name="startup_name" required
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="company_url" class="block text-lg font-medium text-gray-700">Company URL</label>
+                            <input type="text" id="company_url" name="company_url" required
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="founder_name" class="block text-lg font-medium text-gray-700">Founder
+                                Name</label>
+                            <input type="text" id="founder_name" name="founder_name" required
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
+                                          focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="email" required
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-lg font-medium text-gray-700">Phone Number</label>
+                            <input type="tel" id="phone" name="phone"
+                                title="Please enter a valid phone number (numbers, spaces, dashes, parentheses, and optional leading +)"
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="industry" class="block text-lg font-medium text-gray-700">Select Your
+                                Industry</label>
+                            <select id="industry" name="industry" required
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
+                                           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="">Select an industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="fintech">Fintech</option>
+                                <option value="education">Education</option>
+                                <option value="ecommerce">E-commerce</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="startup_stage" class="block text-lg font-medium text-gray-700">Startup
+                                Stage</label>
+                            <select id="startup_stage" name="startup_stage" required
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
+                                           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="">Select a stage</option>
+                                <option value="idea">Idea Stage</option>
+                                <option value="mvp">MVP</option>
+                                <option value="early">Early Traction</option>
+                                <option value="growth">Growth Stage</option>
+                                <option value="scaling">Scaling</option>
+                            </select>
+                        </div>
+
+
+                        <button type="submit"
+                            class="w-full py-3 px-6 bg-purple-950 hover:bg-purple-900 text-white font-semibold rounded-lg shadow transition duration-300 transform hover:scale-105">
+                            Get Started
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Three.js Globe Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof THREE === 'undefined') {
+            console.error("Three.js is not loaded. Please check your CDN link.");
+            return;
+        }
+        const container = document.getElementById('globe-canvas');
+        if (!container) return;
+        // Set container dimensions to fill viewport height
+        container.style.width = '100vw';
+        container.style.height = '100vh';
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        container.appendChild(renderer.domElement);
+        const geometry = new THREE.SphereGeometry(5, 64, 64);
+        const textureLoader = new THREE.TextureLoader();
+        // Use an external URL for the Earth texture (or your own hosted asset)
+        const earthTexture = textureLoader.load('https://threejs.org/examples/textures/earth_atmos_2048.jpg');
+        const material = new THREE.MeshPhongMaterial({ map: earthTexture });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+        camera.position.z = 10;
+        window.addEventListener('resize', function () {
+            const newWidth = container.clientWidth;
+            const newHeight = container.clientHeight;
+            renderer.setSize(newWidth, newHeight);
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+        });
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.y += 0.005;
+            renderer.render(scene, camera);
+        }
+        animate();
+    });
+</script>
+
+<!-- AJAX Submission for Investing Form -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const investingForm = document.getElementById('investingForm');
+        if (investingForm) {
+            investingForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const phoneInput = document.getElementById('phone');
+                if (phoneInput && phoneInput.value) {
+                    const pattern = /^\+?[0-9\s\-()]+$/;
+                    if (!pattern.test(phoneInput.value)) {
+                        phoneInput.setCustomValidity("Please enter a valid phone number (numbers, spaces, dashes, parentheses, and an optional leading +).");
+                        phoneInput.reportValidity();
+                        return;
+                    } else {
+                        phoneInput.setCustomValidity("");
+                    }
+                }
+                const formData = new FormData(investingForm);
+                fetch(investingForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => { throw data; });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status === "success") {
+                            showPopup(data.message, false);
+                            investingForm.reset();
+                        } else {
+                            showPopup(data.message, true);
+                        }
+                    })
+                    .catch(errorData => {
+                        const errorMsg = errorData.message || "An error occurred. Please try again later.";
+                        showPopup(errorMsg, true);
+                    });
+            });
+        }
+        function showPopup(message, isError = false) {
+            const popup = document.createElement('div');
+            popup.id = 'popup-message';
+            console.log(message, ' -- message');
+            popup.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
+            popup.innerHTML = `
+            <div class="bg-white p-8 rounded shadow-lg max-w-md mx-auto">
+                <p class="text-xl font-semibold ${isError ? 'text-red-700' : 'text-green-700'}">${message}</p>
+                <button id="close-popup" class="mt-4 px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600">Close</button>
+            </div>
+        `;
+            document.body.appendChild(popup);
+            document.getElementById('close-popup').addEventListener('click', function () {
+                document.body.removeChild(popup);
+            });
+            setTimeout(function () {
+                if (document.body.contains(popup)) {
+                    document.body.removeChild(popup);
+                }
+            }, 5000);
+        }
+    });
+</script>
+{% endblock %}

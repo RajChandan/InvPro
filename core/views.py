@@ -248,6 +248,8 @@ def register_startup(request):
         founder_name = request.POST.get("founder_name", "").strip()
         industry = request.POST.get("industry", "").strip()
         startup_stage = request.POST.get("startup_stage", "").strip()
+
+        # Check required fields (adjust if any field is optional)
         if not (
             startup_name
             and company_url
@@ -256,7 +258,14 @@ def register_startup(request):
             and industry
             and startup_stage
         ):
-            messages.error(request, "Please fill in all required fields.")
+            error_message = "Please fill in all required fields."
+            # If AJAX request, return JSON response with error message.
+            if request.headers.get("x-requested-with") == "XMLHttpRequest":
+                return JsonResponse(
+                    {"status": "error", "message": error_message}, status=400
+                )
+            # Otherwise, use the messages framework
+            messages.error(request, error_message)
             return render(request, "core/register_startup.html")
 
         startup = Startup(
@@ -270,6 +279,10 @@ def register_startup(request):
             startup_stage=startup_stage,
         )
         startup.save()
-        messages.success(request, "Your startup has been registered successfully!")
+        success_message = "Your startup has been registered successfully!"
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            return JsonResponse({"status": "success", "message": success_message})
+        messages.success(request, success_message)
         return redirect("landing_page")
+
     return render(request, "core/register_startup.html")

@@ -1,78 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<!-- Custom CSS Animations -->
-<style>
-    @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    .animate-spin-slow {
-        animation: spin 20s linear infinite;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    .animate-fade-in {
-        animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .animate-slide-in {
-        animation: slideIn 1s ease-out;
-    }
-
-    @keyframes bounceIn {
-        0% {
-            transform: scale(0.5);
-            opacity: 0;
-        }
-
-        60% {
-            transform: scale(1.05);
-            opacity: 1;
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-
-    .animate-bounce-in {
-        animation: bounceIn 0.8s ease-out;
-    }
-</style>
-
 <section id="start-investing" class="bg-gray-50 py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Gradient Heading -->
         <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-purple-950 via-purple-800 to-pink-900"
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in"
                 style="background: linear-gradient(to right, #7e22ce, #af3371, #7c1a1a); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                 Ignite Innovation. Connect with Investors. Accelerate Growth.
             </h1>
@@ -83,54 +16,95 @@
             <!-- Left Column: Globe & Process Explanation -->
             <div class="w-full md:w-1/2 space-y-8">
                 <div class="relative animate-fade-inRight">
-                    <div class="relative z-10 bg-white rounded-2xl p-10 border border-gray-100 shadow-2xl">
-                        <p class="text-gray-600 text-center mb-8 text-lg">
-                            Join our platform and connect with investors, mentors, and resources that can take your
-                            startup to the next level.
+                    <!-- Decorative background elements -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50 rounded-2xl opacity-70">
+                    </div>
+                    <div class="absolute inset-0 bg-[url('{% static " images/startup-launch.svg" %}')] bg-no-repeat
+                        bg-center bg-contain opacity-10">
+                    </div>
+
+                    <!-- Main content card with enhanced styling -->
+                    <div
+                        class="relative z-10 bg-white/95 backdrop-blur-sm rounded-2xl p-10 border border-purple-100 shadow-2xl hover:shadow-purple-100 transition-all duration-300">
+                        <!-- Added startup illustration with enhanced styling -->
+                        <div class="mb-12 text-center">
+                            <div class="relative inline-block">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full blur-2xl opacity-50">
+                                </div>
+                                <img src="{% static 'images/startup-launch.svg' %}" alt="Startup Growth"
+                                    class="relative w-64 h-64 mx-auto mb-4 animate-bounce-in transform hover:scale-105 transition-transform duration-300">
+                            </div>
+                        </div>
+
+                        <p class="text-gray-700 text-center mb-8 text-lg font-medium leading-relaxed">
+                            Our platform empowers you to make smarter investments with exclusive insights and tailored
+                            support.
                         </p>
                         <div class="space-y-4">
-                            <ul class="space-y-3">
-                                <li class="flex items-center">
+                            <ul class="space-y-4">
+                                <li
+                                    class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md">
                                     <div class="flex-shrink-0">
-                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
-                                        </svg>
+                                        <div
+                                            class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-purple-700" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <span class="ml-3 text-gray-700 font-medium">
+                                    <span class="ml-4 text-gray-700 font-medium">
                                         Access to our network of angel investors and venture capitalists
                                     </span>
                                 </li>
-                                <li class="flex items-center">
+                                <li
+                                    class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md">
                                     <div class="flex-shrink-0">
-                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
-                                        </svg>
+                                        <div
+                                            class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-purple-700" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <span class="ml-3 text-gray-700 font-medium">
+                                    <span class="ml-4 text-gray-700 font-medium">
                                         Personalized mentorship from industry experts
                                     </span>
                                 </li>
-                                <li class="flex items-center">
+                                <li
+                                    class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md">
                                     <div class="flex-shrink-0">
-                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
-                                        </svg>
+                                        <div
+                                            class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-purple-700" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <span class="ml-3 text-gray-700 font-medium">
+                                    <span class="ml-4 text-gray-700 font-medium">
                                         Exclusive resources and tools to scale your business
                                     </span>
                                 </li>
-                                <li class="flex items-center">
+                                <li
+                                    class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl hover:from-purple-100 hover:to-pink-100 transition-all duration-300 transform hover:scale-[1.02] shadow-sm hover:shadow-md">
                                     <div class="flex-shrink-0">
-                                        <svg class="w-6 h-6 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
-                                        </svg>
+                                        <div
+                                            class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-purple-700" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586l-3.293-3.293a1 1 0 10-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <span class="ml-3 text-gray-700 font-medium">
+                                    <span class="ml-4 text-gray-700 font-medium">
                                         Opportunities to showcase your startup to potential customers
                                     </span>
                                 </li>
@@ -141,17 +115,15 @@
             </div>
 
 
-            <!-- Right Column: Investment Inquiry Form -->
+            <!-- Right Column: Startup Registration Form -->
             <div class="w-full md:w-1/2">
-                <div class="bg-white shadow-lg rounded-lg p-6 animate-bounce-in">
+                <div class="bg-white shadow-lg rounded-lg p-6 animate-bounce-in"
+                    style="background-image: radial-gradient(circle, rgba(220,220,220,0.2) 1px, transparent 1px); background-size: 10px 10px;">
                     <h2 class="text-3xl font-bold text-gray-800 text-center mb-6 animate-fade-in">Register Your Startup
                     </h2>
-                    <form id="investingForm" action="{% url 'register_startup' %}" method="POST" class="space-y-6"
+                    <form id="startupForm" action="{% url 'register_startup' %}" method="POST" class="space-y-6"
                         novalidate>
                         {% csrf_token %}
-
-
-
                         <div>
                             <label for="startup_name" class="block text-lg font-medium text-gray-700">Startup
                                 Name</label>
@@ -160,15 +132,14 @@
                         </div>
                         <div>
                             <label for="company_url" class="block text-lg font-medium text-gray-700">Company URL</label>
-                            <input type="text" id="company_url" name="company_url" required
+                            <input type="url" id="company_url" name="company_url" required
                                 class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         </div>
                         <div>
                             <label for="founder_name" class="block text-lg font-medium text-gray-700">Founder
                                 Name</label>
                             <input type="text" id="founder_name" name="founder_name" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
-                                          focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                         </div>
                         <div>
                             <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
@@ -185,8 +156,7 @@
                             <label for="industry" class="block text-lg font-medium text-gray-700">Select Your
                                 Industry</label>
                             <select id="industry" name="industry" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
-                                           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                 <option value="">Select an industry</option>
                                 <option value="technology">Technology</option>
                                 <option value="healthcare">Healthcare</option>
@@ -200,8 +170,7 @@
                             <label for="startup_stage" class="block text-lg font-medium text-gray-700">Startup
                                 Stage</label>
                             <select id="startup_stage" name="startup_stage" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm
-                                           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                 <option value="">Select a stage</option>
                                 <option value="idea">Idea Stage</option>
                                 <option value="mvp">MVP</option>
@@ -210,13 +179,10 @@
                                 <option value="scaling">Scaling</option>
                             </select>
                         </div>
-
-
                         <button type="submit"
                             class="w-full py-3 px-6 bg-purple-950 hover:bg-purple-900 text-white font-semibold rounded-lg shadow transition duration-300 transform hover:scale-105">
                             Get Started
                         </button>
-
                     </form>
                 </div>
             </div>
@@ -224,62 +190,25 @@
     </div>
 </section>
 
-<!-- Three.js Globe Script -->
+<!-- AJAX Submission for Startup Form -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        if (typeof THREE === 'undefined') {
-            console.error("Three.js is not loaded. Please check your CDN link.");
-            return;
-        }
-        const container = document.getElementById('globe-canvas');
-        if (!container) return;
-        // Set container dimensions to fill viewport height
-        container.style.width = '100vw';
-        container.style.height = '100vh';
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(width, height);
-        container.appendChild(renderer.domElement);
-        const geometry = new THREE.SphereGeometry(5, 64, 64);
-        const textureLoader = new THREE.TextureLoader();
-        // Use an external URL for the Earth texture (or your own hosted asset)
-        const earthTexture = textureLoader.load('https://threejs.org/examples/textures/earth_atmos_2048.jpg');
-        const material = new THREE.MeshPhongMaterial({ map: earthTexture });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-        scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(5, 5, 5);
-        scene.add(directionalLight);
-        camera.position.z = 10;
-        window.addEventListener('resize', function () {
-            const newWidth = container.clientWidth;
-            const newHeight = container.clientHeight;
-            renderer.setSize(newWidth, newHeight);
-            camera.aspect = newWidth / newHeight;
-            camera.updateProjectionMatrix();
-        });
-        function animate() {
-            requestAnimationFrame(animate);
-            sphere.rotation.y += 0.005;
-            renderer.render(scene, camera);
-        }
-        animate();
-    });
-</script>
-
-<!-- AJAX Submission for Investing Form -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const investingForm = document.getElementById('investingForm');
-        if (investingForm) {
-            investingForm.addEventListener('submit', function (event) {
+        const startupForm = document.getElementById('startupForm');
+        if (startupForm) {
+            startupForm.addEventListener('submit', function (event) {
                 event.preventDefault();
-                const phoneInput = document.getElementById('phone');
+
+                // Validate all required fields
+                const requiredFields = startupForm.querySelectorAll('[required]');
+                for (let field of requiredFields) {
+                    if (!field.value.trim()) {
+                        field.reportValidity();
+                        return;
+                    }
+                }
+
+                // Validate phone input (if any)
+                const phoneInput = startupForm.querySelector('input[type="tel"]');
                 if (phoneInput && phoneInput.value) {
                     const pattern = /^\+?[0-9\s\-()]+$/;
                     if (!pattern.test(phoneInput.value)) {
@@ -290,12 +219,12 @@
                         phoneInput.setCustomValidity("");
                     }
                 }
-                const formData = new FormData(investingForm);
-                fetch(investingForm.action, {
+
+                const formData = new FormData(startupForm);
+                console.log("Submitting form via AJAX with data:", [...formData.entries()]);
+                fetch(startupForm.action, {
                     method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     body: formData
                 })
                     .then(response => {
@@ -307,7 +236,7 @@
                     .then(data => {
                         if (data.status === "success") {
                             showPopup(data.message, false);
-                            investingForm.reset();
+                            startupForm.reset();
                         } else {
                             showPopup(data.message, true);
                         }
@@ -318,26 +247,35 @@
                     });
             });
         }
+
         function showPopup(message, isError = false) {
+            const existingPopup = document.getElementById('popup-message');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
             const popup = document.createElement('div');
             popup.id = 'popup-message';
-            console.log(message, ' -- message');
             popup.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
             popup.innerHTML = `
             <div class="bg-white p-8 rounded shadow-lg max-w-md mx-auto">
-                <p class="text-xl font-semibold ${isError ? 'text-red-700' : 'text-green-700'}">${message}</p>
-                <button id="close-popup" class="mt-4 px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600">Close</button>
+                <p class="text-xl font-semibold ${isError ? 'text-red-700' : 'text-purple-700'}">${message}</p>
+                <button id="close-popup" class="mt-4 block px-6 py-3 bg-purple-950 text-white font-semibold rounded shadow hover:bg-purple-900">
+                    Close
+                </button>
             </div>
         `;
             document.body.appendChild(popup);
-            document.getElementById('close-popup').addEventListener('click', function () {
-                document.body.removeChild(popup);
-            });
+            const closeBtn = popup.querySelector('#close-popup');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    popup.remove();
+                });
+            }
             setTimeout(function () {
                 if (document.body.contains(popup)) {
-                    document.body.removeChild(popup);
+                    popup.remove();
                 }
-            }, 5000);
+            }, 6000);
         }
     });
 </script>

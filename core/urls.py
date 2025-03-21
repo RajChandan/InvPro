@@ -1,9 +1,20 @@
 from django.urls import path
-from .views import landing_page, start_investing, register_startup,about
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
-    path("", landing_page, name="landing_page"),
-    path("start_investing/", start_investing, name="start_investing"),
-    path("register_startup/", register_startup, name="register_startup"),
-    path("about/", about, name="about"),
+    path('', views.landing_page, name='home'),
+    path('start-investing/', views.start_investing, name='start_investing'),
+    path('register-startup/', views.register_startup, name='register_startup'),
+    path('about/', views.about, name='about'),
 ]
+
+# Custom error handlers
+handler404 = 'core.views.custom_404'
+handler500 = 'core.views.custom_500'
+handler403 = 'core.views.custom_403'
+
+# Serve media files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

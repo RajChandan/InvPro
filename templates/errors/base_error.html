@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 text-center">
+        <div class="glass-effect rounded-2xl p-8 shadow-xl">
+            <div class="mb-8">
+                {% block error_icon %}{% endblock %}
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                {% block error_title %}{% endblock %}
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">
+                {% block error_message %}{% endblock %}
+            </p>
+            <div class="space-y-4">
+                <a href="{% url 'home' %}"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
+                    Return to Home
+                </a>
+                <button onclick="history.back()"
+                    class="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200">
+                    Go Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

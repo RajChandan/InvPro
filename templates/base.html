@@ -9,28 +9,83 @@
   <title>InvestorPro | AI-Powered Investment Platform</title>
 
   <!-- Load Google Fonts for Montserrat & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:wght@100..900&display=swap"
+    rel="stylesheet">
 
-  <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:wght@100..900&display=swap"
-      rel="stylesheet">
-
-  </head>
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.min.js"></script>
+  <!-- Three.js -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.min.js"></script>
 
+  <!-- Particle.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
   <!-- Load Tailwind CSS -->
   <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+
+  <!-- Custom Animations -->
+  <style>
+    body {
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: transparent;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+    }
+
+    /* Ensure navbar and footer are above particles */
+    nav,
+    footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Make sure all sections have transparent backgrounds */
+    section {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+    }
+
+    /* Ensure cards and other content elements are above particles */
+    .card,
+    .glass-effect,
+    .stat-card,
+    .industry-tag {
+      position: relative;
+      z-index: 2;
+    }
+  </style>
 
   <!-- Scripts -->
   <script src="{% static 'js/scripts.js' %}" defer></script>
 </head>
 
 <body class="antialiased text-gray-800 min-h-screen flex flex-col">
+  <!-- Particle.js Container -->
+  <div id="particles-js"></div>
 
   <!-- Navbar -->
   {% include "partials/navbar.html" %}
@@ -43,6 +98,107 @@
   <!-- Footer -->
   {% include "partials/footer.html" %}
 
+  <!-- Particle.js Configuration -->
+  <script>
+    function initParticles() {
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+          particles: {
+            number: {
+              value: 80,
+              density: {
+                enable: true,
+                value_area: 800
+              }
+            },
+            color: {
+              value: '#7e22ce'
+            },
+            shape: {
+              type: 'circle'
+            },
+            opacity: {
+              value: 0.5,
+              random: false,
+              animation: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.1,
+                sync: false
+              }
+            },
+            size: {
+              value: 3,
+              random: true,
+              animation: {
+                enable: true,
+                speed: 2,
+                size_min: 0.1,
+                sync: false
+              }
+            },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: '#7e22ce',
+              opacity: 0.2,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: 'none',
+              random: false,
+              straight: false,
+              out_mode: 'out',
+              bounce: false,
+              attract: {
+                enable: true,
+                rotateX: 600,
+                rotateY: 1200
+              }
+            }
+          },
+          interactivity: {
+            detect_on: 'canvas',
+            events: {
+              onhover: {
+                enable: true,
+                mode: 'grab'
+              },
+              onclick: {
+                enable: true,
+                mode: 'push'
+              },
+              resize: true
+            },
+            modes: {
+              grab: {
+                distance: 140,
+                line_linked: {
+                  opacity: 0.5
+                }
+              },
+              push: {
+                particles_nb: 4
+              }
+            }
+          },
+          retina_detect: true
+        });
+      }
+    }
+
+    // Initialize particles when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initParticles);
+
+    // Re-initialize particles when the page is shown (for single-page apps)
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') {
+        initParticles();
+      }
+    });
+  </script>
 </body>
 
 </html>

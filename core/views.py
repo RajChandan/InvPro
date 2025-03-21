@@ -286,3 +286,8 @@ def register_startup(request):
         return redirect("landing_page")
 
     return render(request, "core/register_startup.html")
+
+
+
+def about(request):
+    return render(request, "core/about.html")

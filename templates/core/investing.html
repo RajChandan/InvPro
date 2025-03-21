@@ -3,59 +3,27 @@
 {% block content %}
 <!-- Custom CSS Animations -->
 <style>
-    @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    .animate-spin-slow {
-        animation: spin 20s linear infinite;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-    }
-
-    .animate-fade-in {
-        animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translateY(-20px);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .animate-slide-in {
-        animation: slideIn 1s ease-out;
-    }
-
-    @keyframes bounceIn {
+    @keyframes float {
         0% {
-            transform: scale(0.5);
-            opacity: 0;
+            transform: translateY(0px);
         }
 
-        60% {
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
             transform: scale(1.05);
-            opacity: 1;
         }
 
         100% {
@@ -63,100 +31,249 @@
         }
     }
 
-    .animate-bounce-in {
-        animation: bounceIn 0.8s ease-out;
+    @keyframes gradient-shift {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-pulse-slow {
+        animation: pulse 4s ease-in-out infinite;
+    }
+
+    .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient-shift 15s ease infinite;
+    }
+
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+
+    .feature-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        border-color: rgba(126, 34, 206, 0.2);
+    }
+
+    .form-input {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-input:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(126, 34, 206, 0.3);
+    }
+
+    .submit-button {
+        background: linear-gradient(135deg, #7e22ce, #af3371);
+        transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(126, 34, 206, 0.4);
+    }
+
+    /* Form Validation Styles */
+    .form-input.error {
+        border-color: #ef4444;
+        background-color: #fef2f2;
+    }
+
+    .form-input.success {
+        border-color: #10b981;
+        background-color: #f0fdf4;
+    }
+
+    .error-message {
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: none;
+    }
+
+    .success-message {
+        color: #10b981;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: none;
+    }
+
+    /* Loading State */
+    .loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+    }
+
+    /* Focus Styles */
+    .form-input:focus-visible {
+        outline: 2px solid #7e22ce;
+        outline-offset: 2px;
+    }
+
+    /* Toast Notification */
+    .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        background: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 50;
+    }
+
+    .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .toast.success {
+        border-left: 4px solid #10b981;
+    }
+
+    .toast.error {
+        border-left: 4px solid #ef4444;
     }
 </style>
 
-<section id="start-investing" class="bg-gray-50 py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="start-investing" class="relative min-h-screen py-24 overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div
+            class="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-purple-200 to-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float">
+        </div>
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-pink-200 to-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float"
+            style="animation-delay: -2s;"></div>
+        <div class="absolute bottom-0 left-1/2 w-[600px] h-[600px] bg-gradient-to-br from-blue-200 to-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float"
+            style="animation-delay: -4s;"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Gradient Heading -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-purple-950 via-purple-800 to-pink-900"
-                style="background: linear-gradient(to right, #7e22ce, #ec4899, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                Discover opportunities. Follow our process. Build global wealth.
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
+                <span
+                    class="bg-gradient-to-r from-purple-950 via-purple-800 to-pink-900 bg-clip-text text-transparent animate-gradient">
+                    Discover opportunities. Follow our process. Build global wealth.
+                </span>
             </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Join our elite community of investors and access exclusive opportunities in emerging markets.
+            </p>
         </div>
 
         <!-- Two-Column Layout -->
-        <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col md:flex-row gap-12">
             <!-- Left Column: Globe & Process Explanation -->
             <div class="w-full md:w-1/2 space-y-8">
+
                 <!-- Globe Canvas Container -->
-                <div id="globe-canvas" class="w-full" style="min-height: 50vh;"></div>
+                <div id="globe-canvas" class="w-full glass-effect rounded-2xl p-6" style="min-height: 50vh;" role="img"
+                    aria-label="Interactive 3D Globe Visualization"></div>
 
-                <div class="relative animate__animated animate__fadeInRight">
-                    <div class="relative z-10 bg-white rounded-2xl p-8 border border-gray-200 shadow-xl">
-                        <div class="space-y-6">
+                <div class="space-y-6">
+                    <div class="feature-card glass-effect rounded-2xl p-6">
+                        <div class="flex items-center gap-6">
                             <div
-                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
-                                <div>
-                                    <h3 class="text-gray-900 font-semibold">Personalized Profile</h3>
-                                    <p class="text-gray-600">Build a tailored investor profile to unlock exclusive
-                                        opportunities</p>
-                                </div>
-                                <div
-                                    class="h-12 w-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                                    <!-- User Icon -->
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5.121 17.804A13.937 13.937 0 0112 15c2.66 0 5.16.7 7.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                </div>
+                                class="h-14 w-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5.121 17.804A13.937 13.937 0 0112 15c2.66 0 5.16.7 7.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
                             </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">Personalized Profile</h3>
+                                <p class="text-gray-600">Build a tailored investor profile to unlock exclusive
+                                    opportunities</p>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="feature-card glass-effect rounded-2xl p-6">
+                        <div class="flex items-center gap-6">
                             <div
-                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
-                                <div>
-                                    <h3 class="text-gray-900 font-semibold">Exclusive Deal Flow</h3>
-                                    <p class="text-gray-600">Access pre-vetted opportunities and expert market insights
-                                    </p>
-                                </div>
-                                <div
-                                    class="h-12 w-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                                    <!-- Document Icon -->
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M7 7h10M7 11h6m-6 4h4M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H9l-4 4v10a2 2 0 002 2h2a2 2 0 002-2z" />
-                                    </svg>
-                                </div>
+                                class="h-14 w-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h10M7 11h6m-6 4h4M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H9l-4 4v10a2 2 0 002 2h2a2 2 0 002-2z" />
+                                </svg>
                             </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">Exclusive Deal Flow</h3>
+                                <p class="text-gray-600">Access pre-vetted opportunities and expert market insights</p>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="feature-card glass-effect rounded-2xl p-6">
+                        <div class="flex items-center gap-6">
                             <div
-                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
-                                <div>
-                                    <h3 class="text-gray-900 font-semibold">Confident Investing</h3>
-                                    <p class="text-gray-600">Invest in high-potential opportunities that match your
-                                        goals</p>
-                                </div>
-                                <div
-                                    class="h-12 w-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                                    <!-- Chart-Bar Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 10h4v11H3V10zM10 4h4v17h-4V4zM17 14h4v7h-4v-7z" />
-                                    </svg>
-                                </div>
+                                class="h-14 w-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 10h4v11H3V10zM10 4h4v17h-4V4zM17 14h4v7h-4v-7z" />
+                                </svg>
                             </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">Confident Investing</h3>
+                                <p class="text-gray-600">Invest in high-potential opportunities that match your goals
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card glass-effect rounded-2xl p-6">
+                        <div class="flex items-center gap-6">
                             <div
-                                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
-                                <div>
-                                    <h3 class="text-gray-900 font-semibold">Real-Time Monitoring</h3>
-                                    <p class="text-gray-600">Stay informed with up-to-date analytics on your portfolio
-                                    </p>
-                                </div>
-                                <div
-                                    class="h-12 w-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                                    <!-- Clock Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 8v4l3 3m0-7a8 8 0 11-8 8 8 8 0 018-8z" />
-                                    </svg>
-                                </div>
+                                class="h-14 w-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m0-7a8 8 0 11-8 8 8 8 0 018-8z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">Real-Time Monitoring</h3>
+                                <p class="text-gray-600">Stay informed with up-to-date analytics on your portfolio</p>
                             </div>
                         </div>
                     </div>
@@ -165,46 +282,41 @@
 
             <!-- Right Column: Investment Inquiry Form -->
             <div class="w-full md:w-1/2">
-                <div class="bg-white shadow-lg rounded-lg p-6 animate-bounce-in" style="background-image: 
-                    radial-gradient(circle, rgba(220,220,220,0.4) 20%, transparent 21%),
-                    linear-gradient(to bottom right, rgba(255,255,255,0.3), rgba(255,255,255,0));
-                    background-size: 10px 10px, 100% 100%;
-                    background-repeat: repeat, no-repeat;">
-                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6 animate-fade-in">Investment Inquiry
+                <div class="glass-effect rounded-2xl p-8 animate-bounce-in">
+                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-8 animate-fade-in">Investment Inquiry
                     </h2>
                     <form id="investingForm" action="{% url 'start_investing' %}" method="POST" class="space-y-6"
                         novalidate>
                         {% csrf_token %}
-
-
-
                         <div>
-                            <label for="name" class="block text-lg font-medium text-gray-700">Your Name</label>
+                            <label for="name" class="block text-lg font-medium text-gray-700 mb-2">Your Name</label>
                             <input type="text" id="name" name="name" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                aria-required="true" aria-describedby="name-error name-success">
+                            <div id="name-error" class="error-message" role="alert"></div>
+                            <div id="name-success" class="success-message" role="alert"></div>
                         </div>
                         <div>
-                            <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
+                            <label for="email" class="block text-lg font-medium text-gray-700 mb-2">Email</label>
                             <input type="email" id="email" name="email" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
                         </div>
                         <div>
-                            <label for="phone" class="block text-lg font-medium text-gray-700">Phone Number</label>
+                            <label for="phone" class="block text-lg font-medium text-gray-700 mb-2">Phone Number</label>
                             <input type="tel" id="phone" name="phone" placeholder="Optional"
-                                title="Please enter a valid phone number (numbers, spaces, dashes, parentheses, and optional leading +)"
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
                         </div>
                         <div>
-                            <label for="investment_amount" class="block text-lg font-medium text-gray-700">Investment
-                                Amount ($)</label>
+                            <label for="investment_amount"
+                                class="block text-lg font-medium text-gray-700 mb-2">Investment Amount ($)</label>
                             <input type="number" id="investment_amount" name="investment_amount" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
                         </div>
                         <div>
-                            <label for="investment_goal" class="block text-lg font-medium text-gray-700">Investment
+                            <label for="investment_goal" class="block text-lg font-medium text-gray-700 mb-2">Investment
                                 Goal</label>
                             <select id="investment_goal" name="investment_goal" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
                                 <option value="">Select a goal</option>
                                 <option value="retirement">Retirement Planning</option>
                                 <option value="wealth">Wealth Building</option>
@@ -213,10 +325,10 @@
                             </select>
                         </div>
                         <div>
-                            <label for="risk_tolerance" class="block text-lg font-medium text-gray-700">Risk
+                            <label for="risk_tolerance" class="block text-lg font-medium text-gray-700 mb-2">Risk
                                 Tolerance</label>
                             <select id="risk_tolerance" name="risk_tolerance" required
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
                                 <option value="">Select your risk tolerance</option>
                                 <option value="low">Low Risk</option>
                                 <option value="medium">Medium Risk</option>
@@ -224,16 +336,26 @@
                             </select>
                         </div>
                         <div>
-                            <label for="sectors" class="block text-lg font-medium text-gray-700">Preferred
+                            <label for="sectors" class="block text-lg font-medium text-gray-700 mb-2">Preferred
                                 Sectors</label>
                             <input type="text" id="sectors" name="sectors" placeholder="e.g. Technology, Healthcare"
-                                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                class="form-input w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
                         </div>
                         <button type="submit"
-                            class="w-full py-3 px-6 bg-purple-950 hover:bg-purple-900 text-white font-semibold rounded-lg shadow transition duration-300 transform hover:scale-105">
-                            Get Started
+                            class="submit-button w-full py-4 px-6 text-white font-semibold rounded-xl shadow-lg"
+                            aria-label="Submit investment inquiry">
+                            <span class="button-text">Get Started</span>
+                            <span class="loading-spinner hidden">
+                                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                            </span>
                         </button>
-
                     </form>
                 </div>
             </div>
@@ -289,72 +411,153 @@
     });
 </script>
 
-<!-- AJAX Submission for Investing Form -->
+<!-- Form Validation and Submission Script -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const investingForm = document.getElementById('investingForm');
-        if (investingForm) {
-            investingForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const phoneInput = document.getElementById('phone');
-                if (phoneInput && phoneInput.value) {
-                    const pattern = /^\+?[0-9\s\-()]+$/;
-                    if (!pattern.test(phoneInput.value)) {
-                        phoneInput.setCustomValidity("Please enter a valid phone number (numbers, spaces, dashes, parentheses, and an optional leading +).");
-                        phoneInput.reportValidity();
-                        return;
-                    } else {
-                        phoneInput.setCustomValidity("");
-                    }
-                }
-                const formData = new FormData(investingForm);
-                fetch(investingForm.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: formData
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(data => { throw data; });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.status === "success") {
-                            showPopup(data.message, false);
-                            investingForm.reset();
-                        } else {
-                            showPopup(data.message, true);
-                        }
-                    })
-                    .catch(errorData => {
-                        const errorMsg = errorData.message || "An error occurred. Please try again later.";
-                        showPopup(errorMsg, true);
-                    });
-            });
+        const form = document.getElementById('investingForm');
+        const submitButton = form.querySelector('button[type="submit"]');
+        const buttonText = submitButton.querySelector('.button-text');
+        const loadingSpinner = submitButton.querySelector('.loading-spinner');
+
+        // Form validation
+        function validateField(field, rules) {
+            const value = field.value.trim();
+            const errorElement = document.getElementById(`${field.id}-error`);
+            const successElement = document.getElementById(`${field.id}-success`);
+
+            // Reset states
+            field.classList.remove('error', 'success');
+            errorElement.style.display = 'none';
+            successElement.style.display = 'none';
+
+            // Validate based on rules
+            if (rules.required && !value) {
+                field.classList.add('error');
+                errorElement.textContent = 'This field is required';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            if (rules.email && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                field.classList.add('error');
+                errorElement.textContent = 'Please enter a valid email address';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            if (rules.phone && value && !/^\+?[0-9\s\-()]+$/.test(value)) {
+                field.classList.add('error');
+                errorElement.textContent = 'Please enter a valid phone number';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            if (rules.number && value && isNaN(value)) {
+                field.classList.add('error');
+                errorElement.textContent = 'Please enter a valid number';
+                errorElement.style.display = 'block';
+                return false;
+            }
+
+            field.classList.add('success');
+            successElement.style.display = 'block';
+            return true;
         }
-        function showPopup(message, isError = false) {
-            const popup = document.createElement('div');
-            popup.id = 'popup-message';
-            popup.className = 'fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50';
-            popup.innerHTML = `
-            <div class="bg-white p-8 rounded shadow-lg max-w-md mx-auto">
-                <p class="text-xl font-semibold ${isError ? 'text-red-700' : 'text-green-700'}">${message}</p>
-                <button id="close-popup" class="mt-4 px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-600">Close</button>
-            </div>
-        `;
-            document.body.appendChild(popup);
-            document.getElementById('close-popup').addEventListener('click', function () {
-                document.body.removeChild(popup);
-            });
-            setTimeout(function () {
-                if (document.body.contains(popup)) {
-                    document.body.removeChild(popup);
-                }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            // Trigger reflow
+            toast.offsetHeight;
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
             }, 5000);
         }
+
+        // Form submission
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Validate all fields
+            const fields = {
+                name: { required: true },
+                email: { required: true, email: true },
+                phone: { phone: true },
+                investment_amount: { required: true, number: true },
+                investment_goal: { required: true },
+                risk_tolerance: { required: true }
+            };
+
+            let isValid = true;
+            for (const [fieldId, rules] of Object.entries(fields)) {
+                const field = document.getElementById(fieldId);
+                if (!validateField(field, rules)) {
+                    isValid = false;
+                }
+            }
+
+            if (!isValid) {
+                showToast('Please correct the errors in the form', 'error');
+                return;
+            }
+
+            // Show loading state
+            submitButton.disabled = true;
+            buttonText.textContent = 'Submitting...';
+            loadingSpinner.classList.remove('hidden');
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    showToast(data.message);
+                    form.reset();
+                } else {
+                    showToast(data.message || 'An error occurred', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred. Please try again later.', 'error');
+            } finally {
+                // Reset button state
+                submitButton.disabled = false;
+                buttonText.textContent = 'Get Started';
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+
+        // Real-time validation
+        form.querySelectorAll('input, select').forEach(field => {
+            field.addEventListener('blur', function () {
+                const rules = {
+                    name: { required: true },
+                    email: { required: true, email: true },
+                    phone: { phone: true },
+                    investment_amount: { required: true, number: true },
+                    investment_goal: { required: true },
+                    risk_tolerance: { required: true }
+                };
+
+                validateField(this, rules[this.id] || {});
+            });
+        });
     });
 </script>
 {% endblock %}

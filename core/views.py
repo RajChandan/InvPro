@@ -65,7 +65,7 @@ def landing_page(request):
         {
             "name": "Sarah Chen",
             "position": "Managing Partner, Beyond Capital",
-            "message": "The AI-powered insights have transformed our investment process. We've seen a 40% increase in deal flow quality since using InvestorPro.",
+            "message": "The AI-powered insights have transformed our investment process. We've seen a 40% increase in deal flow quality since using InvestPro.",
             "initials": "SC",
         },
         {
@@ -77,7 +77,7 @@ def landing_page(request):
         {
             "name": "Jennifer Wong",
             "position": "CEO, Innovation Capital",
-            "message": "InvestorPro's AI-driven due diligence has helped us identify promising startups we might have otherwise missed. Outstanding platform.",
+            "message": "InvestPro's AI-driven due diligence has helped us identify promising startups we might have otherwise missed. Outstanding platform.",
             "initials": "JW",
         },
     ]

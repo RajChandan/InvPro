@@ -133,3 +133,99 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,  # keep the default Django loggers
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime}] {levelname} [{name}:{lineno}] {message}",
+            "style": "{",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",  # set to DEBUG for development
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file_debug": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "debug.log"),
+            "formatter": "verbose",
+        },
+        "file_info": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "info.log"),
+            "formatter": "verbose",
+        },
+        "file_error": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "error.log"),
+            "formatter": "verbose",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        # Default Django logger
+        "django": {
+            "handlers": ["console", "file_info", "mail_admins"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        # Logger for requests errors (HTTP 500, etc.)
+        "django.request": {
+            "handlers": ["file_error", "mail_admins"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        # Logger for database queries (if you need to debug slow queries)
+        "django.db.backends": {
+            "handlers": ["file_debug"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        # Your project-specific logger (for example, for the 'core' app)
+        "core": {
+            "handlers": ["console", "file_debug", "file_info", "file_error"],
+            "level": "DEBUG",  # change to INFO in production if desired
+            "propagate": True,
+        },
+        # You can also set up separate loggers for security and performance if needed
+        "core.security": {
+            "handlers": ["file_info", "file_error", "mail_admins"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "core.performance": {
+            "handlers": ["file_info"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+# Make sure that the logs directory exists
+os.makedirs(os.path.join(BASE_DIR, "logs"), exist_ok=True)

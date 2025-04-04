@@ -24,4 +24,5 @@ crispy-tailwind==0.5.0
 django-tailwind==3.8.0
 django-browser-reload==1.12.1
 django-compressor==4.4
-libsass==0.22.0 
+libsass==0.22.0
+whitenoise==6.5.0
